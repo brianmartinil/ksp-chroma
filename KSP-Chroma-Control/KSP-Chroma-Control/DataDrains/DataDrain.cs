@@ -1,4 +1,4 @@
-﻿namespace KspChromaControl
+﻿namespace KspChromaControl.DataDrains
 {
     using KspChromaControl.ColorSchemes;
 
@@ -12,5 +12,7 @@
         /// </summary>
         /// <param name="scheme">The color scheme to apply to the implemented output device</param>
         void Send(ColorScheme scheme);
+
+        bool Available();
     }
 }

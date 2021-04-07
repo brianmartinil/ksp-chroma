@@ -1,9 +1,11 @@
 ﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 
-namespace KspChromaControl
+namespace KspChromaControl.DataDrains
+
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using Corale.Colore.Core;
     using Corale.Colore.Razer.Keyboard;
     using Corale.Colore.Razer.Mouse.Effects;
@@ -26,6 +28,7 @@ namespace KspChromaControl
 
         private static Color warm = Color.Red;
         private static Color hot = Color.Yellow;
+
 
         /// <summary>
         ///     Unity Keybinding - UK Layout translation dictionary
@@ -189,6 +192,12 @@ namespace KspChromaControl
 
         private CustomGrid mouseGrid = new CustomGrid(Color.Black);
         private Custom mousePadGrid = new Custom(Color.Black);
+
+        public bool Available()
+        {
+            // TODO Actually see if there are devices available
+            return true;
+        }
 
         /// <summary>
         ///     Applies the current color scheme to all connected razer devices.

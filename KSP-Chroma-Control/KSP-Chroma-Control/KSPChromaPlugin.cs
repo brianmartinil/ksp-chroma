@@ -7,6 +7,7 @@ namespace KspChromaControl
     using System.Collections.Generic;
     using KspChromaControl.Animations;
     using KspChromaControl.ColorSchemes;
+    using KspChromaControl.DataDrains;
     using KspChromaControl.SceneManagers;
     using UnityEngine;
 
@@ -17,8 +18,6 @@ namespace KspChromaControl
     [KSPAddon(KSPAddon.Startup.EveryScene, false)]
     public class KspChromaPlugin : MonoBehaviour
     {
-        private readonly List<IDataDrain> dataDrains = new List<IDataDrain>();
-
         /// <summary>
         ///     The UDP network socket to send keyboard appearance orders to the server.
         /// </summary>
@@ -32,7 +31,8 @@ namespace KspChromaControl
         // ReSharper disable once UnusedMember.Local
         private void Awake()
         {
-            this.dataDrains.Add(new ColoreDrain());
+            DrainManager.Instance.Init();
+
             AnimationManager.Instance.SetAnimation(new LogoAnimation());
 
             GameEvents.VesselSituation.onLand.Add(this.CallbackLanded);
@@ -90,7 +90,7 @@ namespace KspChromaControl
                 switch (HighLogic.LoadedScene)
                 {
                     case GameScenes.FLIGHT:
-                        scheme = this.flightSceneManager.GetScheme();
+                        scheme = this.flightSceneManager.GetScheme();              
                         break;
                     case GameScenes.EDITOR:
                         scheme = this.vabSceneManager.GetScheme();
@@ -101,7 +101,7 @@ namespace KspChromaControl
                 }
             }
 
-            this.dataDrains.ForEach(drain => drain.Send(scheme));
+            DrainManager.Instance.Send(scheme);
         }
     }
 }
